@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'contact-details' contact.id %}">User Profile</a></li>
+              <li class="breadcrumb-item active">Delete Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <h2 style="font-style: italic;">Are you sure, you want to delete the following contact?</h2>
+            <hr>
+            <h3>{{ contact.f_name }} {{ contact.l_name }} </h3>
+
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+            <a class="btn btn-outline-secondary" href={% url 'contact-details' contact.id %}>Cancel</a>
+        </div>
+    </form>
+</div>
+</div>
+</section>
+{% endblock content %}
+
