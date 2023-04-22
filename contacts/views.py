@@ -56,14 +56,17 @@ class ContactTagListView(ContactListView):
 
 class ContactDetailView(LoginRequiredMixin, DetailView):
     # TODO implement safety of login required attribute if UID is stolen
+    # TODO show last added contacts first
     model = Contact
 
 
 class ContactCreateView(LoginRequiredMixin, CreateView):
     model = Contact
     # TODO check phone number already exists in contacts when creating new contact
-    # TODO add request to merge with already existing contact
+    # TODO add request to merge with already existing contact during creation
     # TODO resize contact image on save
+    # TODO clean the formatting of contact names before saving
+
     form_class = ContactCreateForm
     success_url = "/"
 
@@ -77,5 +80,6 @@ class ContactUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ContactUpdateForm
 
     # TODO implement sessions, hold data of contact being edited, and save in session
+    # TODO add request to merge with already existing contact during updating contact
     def form_valid(self, form):
         return super().form_valid(form)

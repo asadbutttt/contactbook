@@ -27,7 +27,10 @@
       <a href={% url 'contact-details' contact.id %}><img class="card-img-top" src="{{ contact.image.url }} " alt="Card image"></a>
       <div class="card-body">
         <a style="text-decoration: none;" href={% url 'contact-details' contact.id %}><h4 class="card-title">{{ contact.f_name }} {{ contact.l_name }} </h4></a>
-        <p class="card-text">Phone : {{ contact.phone }}</p>
+        {% if contact.mobile_phone %}<p class="card-text">Mobile Phone : {{ contact.mobile_phone }}</p>{% endif %} 
+        {% if contact.home_phone %}<p class="card-text">Home Phone : {{ contact.home_phone }}</p>{% endif %} 
+        {% if contact.work_phone %}<p class="card-text">Work Phone : {{ contact.work_phone }}</p>{% endif %} 
+        
         <div>
           {% for tag in contact.tags.all %}
             <a href="{% url 'contact-tags' tag %}" class="btn m-1 btn-primary">{{ tag|capfirst }}</a>

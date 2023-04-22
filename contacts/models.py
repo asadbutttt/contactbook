@@ -3,8 +3,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
-from PIL import Image
+from phonenumber_field.modelfields import PhoneNumberField
 
+from PIL import Image
 from taggit.managers import TaggableManager
 from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
 
@@ -18,8 +19,18 @@ class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
 class Contact(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     parent_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    f_name = models.CharField("first name", max_length=255)
-    l_name = models.CharField("last name", max_length=255)
+    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
+    f_name = models.CharField(_("First name"), max_length=255)
+    l_name = models.CharField(_("Last name"), max_length=255)
+
+    mobile_phone = PhoneNumberField(_("Mobile Phone"), blank=True, null=True)
+    work_phone = PhoneNumberField(_("Work Phone"), blank=True, null=True)
+    home_phone = PhoneNumberField(_("Home Phone"), blank=True, null=True)
+    email = models.EmailField(_("Email address"), max_length=254, blank=True, null=True)
+    address = models.CharField(_("Address"), max_length=255, blank=True, null=True)
+    dob = models.DateField(_("Date of birth"), blank=True, null=True)
+    notes = models.TextField(_("Notes"), max_length=500, blank=True, null=True)
+    tags = TaggableManager(through=UUIDTaggedItem)
 
     # TODO Add email field
     # TODO Add notes field for each contact
@@ -29,11 +40,8 @@ class Contact(models.Model):
     # TODO mobile phone field
     # TODO home phone field
     # TODO add github link
-
-    phone = models.CharField("phone no.", max_length=255)
-    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
-
-    tags = TaggableManager(through=UUIDTaggedItem)
+    # TODO add translation into all fields
+    # BUG landline number cannot be added
 
     def __str__(self) -> str:
         return f"{self.f_name} Contact"

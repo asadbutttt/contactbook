@@ -15,7 +15,10 @@
       </div>
     <div class="content-section row d-flex justify-content-center">
         <form method="POST" enctype="multipart/form-data">
+          <!-- TODO expand the submit button to fill the space -->         
+          <p class="text-muted">Fields marked by asterisk are required!</p>
             {{ form|crispy }}
+
             <button class="btn btn-outline-info" type="submit">Submit</button>
             {% csrf_token %}
         </form>
