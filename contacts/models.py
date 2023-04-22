@@ -32,13 +32,6 @@ class Contact(models.Model):
     notes = models.TextField(_("Notes"), max_length=500, blank=True, null=True)
     tags = TaggableManager(through=UUIDTaggedItem)
 
-    # TODO Add email field
-    # TODO Add notes field for each contact
-    # TODO add date of birth field
-    # TODO add address field
-    # TODO work phone field
-    # TODO mobile phone field
-    # TODO home phone field
     # TODO add github link
     # TODO add translation into all fields
     # BUG landline number cannot be added
