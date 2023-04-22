@@ -20,23 +20,33 @@ class Contact(models.Model):
     parent_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     f_name = models.CharField("first name", max_length=255)
     l_name = models.CharField("last name", max_length=255)
+
+    # TODO Add email field
+    # TODO Add notes field for each contact
+    # TODO add date of birth field
+    # TODO add address field
+    # TODO work phone field
+    # TODO mobile phone field
+    # TODO home phone field
+    # TODO add github link
+
     phone = models.CharField("phone no.", max_length=255)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default="default.jpg", upload_to="profile_pics")
 
     tags = TaggableManager(through=UUIDTaggedItem)
 
     def __str__(self) -> str:
-        return f'{self.f_name} Contact'
-    
+        return f"{self.f_name} Contact"
+
     def get_absolute_url(self):
-        return reverse('contact-details', kwargs={'pk': self.pk})
-    
+        return reverse("contact-details", kwargs={"pk": self.pk})
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
         img = Image.open(self.image.path)
 
-        print(f'Current image path is: {self.image.path}')
+        print(f"Current image path is: {self.image.path}")
 
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
