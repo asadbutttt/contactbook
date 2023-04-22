@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap4",
     "taggit",
     "phonenumber_field",
+    # TODO install django-debug toolbar to optimize queries
 ]
 
 MIDDLEWARE = [

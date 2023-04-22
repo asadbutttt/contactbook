@@ -26,6 +26,7 @@ def success(request):
 
 
 class ContactListView(LoginRequiredMixin, ListView):
+    # TODO add pagination 10 contacts per page
     model = Contact
     # <app> / <model>_<viewtype>.html
     context_object_name = "contacts"
