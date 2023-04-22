@@ -33,7 +33,6 @@ class Contact(models.Model):
     tags = TaggableManager(through=UUIDTaggedItem)
 
     # TODO add github link
-    # TODO add translation into all fields
     # BUG landline number cannot be added
 
     def __str__(self) -> str:
