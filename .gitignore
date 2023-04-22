@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
 
+### Vscode settings ###
+settings.json
+
 ### Django ###
 *.log
 *.pot
@@ -8,6 +11,7 @@
 __pycache__/
 local_settings.py
 db.sqlite3
+migrations/
 db.sqlite3-journal
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
