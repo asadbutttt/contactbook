@@ -66,7 +66,6 @@ class ContactTagListView(ContactListView):
 
 class ContactDetailView(LoginRequiredMixin, DetailView):
     # TODO implement safety of login required attribute if UID is stolen
-    # TODO show last added contacts first
     model = Contact
 
 

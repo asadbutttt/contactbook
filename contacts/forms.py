@@ -3,6 +3,14 @@ from .models import Contact
 
 
 class ContactCreateForm(forms.ModelForm):
+    def clean_f_name(self):
+        data = self.cleaned_data["f_name"].capitalize()
+        return data
+
+    def clean_l_name(self):
+        data = self.cleaned_data["l_name"].capitalize()
+        return data
+
     class Meta:
         model = Contact
         fields = [
