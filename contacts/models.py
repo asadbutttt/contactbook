@@ -50,7 +50,6 @@ class Contact(models.Model):
         blank=True,
         null=True,
     )
-    # TODO add icons to all fields like github
     # BUG landline number cannot be added
 
     def __str__(self) -> str:
