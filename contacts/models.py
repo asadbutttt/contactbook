@@ -1,13 +1,24 @@
 import uuid
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.exceptions import ValidationError
 
 from PIL import Image
 from taggit.managers import TaggableManager
 from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
+
+
+def validate_github_link(link):
+    if "github.com/" in link:
+        return link
+    else:
+        raise ValidationError(
+            "This field only accepts valid Github URLs e.g. https://github.com/aaa"
+        )
 
 
 class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
@@ -22,6 +33,7 @@ class Contact(models.Model):
     image = models.ImageField(default="default.jpg", upload_to="profile_pics")
     f_name = models.CharField(_("First name"), max_length=255)
     l_name = models.CharField(_("Last name"), max_length=255)
+    date_created = models.DateTimeField(default=timezone.now)
 
     mobile_phone = PhoneNumberField(_("Mobile Phone"), blank=True, null=True)
     work_phone = PhoneNumberField(_("Work Phone"), blank=True, null=True)
@@ -31,8 +43,14 @@ class Contact(models.Model):
     dob = models.DateField(_("Date of birth"), blank=True, null=True)
     notes = models.TextField(_("Notes"), max_length=500, blank=True, null=True)
     tags = TaggableManager(through=UUIDTaggedItem)
-
-    # TODO add github link
+    link = models.URLField(
+        _("Github profile"),
+        max_length=200,
+        validators=[validate_github_link],
+        blank=True,
+        null=True,
+    )
+    # TODO add icons to all fields like github
     # BUG landline number cannot be added
 
     def __str__(self) -> str:

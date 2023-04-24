@@ -16,6 +16,7 @@ class ContactCreateForm(forms.ModelForm):
             "email",
             "dob",
             "address",
+            "link",
             "notes",
         ]
 
