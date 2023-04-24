@@ -13,8 +13,6 @@ from taggit.models import Tag
 from .models import Contact
 from .forms import ContactCreateForm, ContactUpdateForm
 
-# TODO elasticsearch implementation
-
 
 class ContactDeleteView(LoginRequiredMixin, DeleteView):
     model = Contact
@@ -26,7 +24,8 @@ def success(request):
 
 
 class ContactListView(LoginRequiredMixin, ListView):
-    # TODO add pagination 10 contacts per page
+    paginate_by = 5
+
     model = Contact
     # <app> / <model>_<viewtype>.html
     context_object_name = "contacts"
