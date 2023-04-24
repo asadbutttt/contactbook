@@ -37,6 +37,7 @@ class ContactListView(LoginRequiredMixin, ListView):
         context["tags"] = set()
         for tag in Tag.objects.filter(contact__parent_user=user):
             context["tags"].update([tag])
+        context["total"] = Contact.objects.filter(parent_user=self.request.user).count()
         return context
 
     def get_queryset(self):
@@ -45,6 +46,15 @@ class ContactListView(LoginRequiredMixin, ListView):
 
 
 class ContactTagListView(ContactListView):
+    def get_context_data(self, *args, **kwargs):
+        context = super(ContactListView, self).get_context_data(*args, **kwargs)
+        user = get_object_or_404(User, username=self.request.user.username)
+        context["tags"] = set()
+        for tag in Tag.objects.filter(contact__parent_user=user):
+            context["tags"].update([tag])
+        context["total"] = Contact.objects.filter(parent_user=self.request.user).count()
+        return context
+
     def get_queryset(self):
         user = get_object_or_404(User, username=self.request.user.username)
         if self.kwargs["tag"] == "all":
