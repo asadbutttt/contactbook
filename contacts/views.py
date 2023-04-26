@@ -71,13 +71,15 @@ class ContactDetailView(LoginRequiredMixin, DetailView):
 
 class ContactCreateView(LoginRequiredMixin, CreateView):
     model = Contact
-    # TODO check phone number already exists in contacts when creating new contact
     # TODO add request to merge with already existing contact during creation
-    # TODO resize contact image on save
-    # TODO clean the formatting of contact names before saving
 
     form_class = ContactCreateForm
     success_url = "/"
+
+    def get_form_kwargs(self):
+        kw = super(ContactCreateView, self).get_form_kwargs()
+        kw["request"] = self.request
+        return kw
 
     def form_valid(self, form):
         form.instance.parent_user = self.request.user
