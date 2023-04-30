@@ -8,6 +8,8 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
+from django.http import JsonResponse
 
 from taggit.models import Tag
 from .models import Contact
@@ -21,6 +23,18 @@ class ContactDeleteView(LoginRequiredMixin, DeleteView):
 
 def success(request):
     return render(request, "contacts/success.html")
+
+
+# A View to delete multiple contacts at once!
+def delete(request):
+    if request.method == "POST":
+        try:
+            ids_list = request.POST.getlist("ids_list[]")
+            delete_objects = Contact.objects.filter(id__in=ids_list)
+            delete_objects.delete()
+            return JsonResponse({})
+        except:
+            return JsonResponse("error", status=404)
 
 
 class ContactListView(LoginRequiredMixin, ListView):
